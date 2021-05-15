@@ -38,6 +38,20 @@ exports.register = (req , res , next) => {
 	})
 }
 
+exports.registerGoogle = (req , res , next) => {
+	const {name , email } = req.body
+
+	const Data = new user({
+					 username : name ,
+					 email : email
+				})
+
+	Data.save()
+		.then(result => {
+			 res.status(201)
+			 	.json({ message : "Register Success" }) })
+}
+
 exports.login = (req , res , next) => {
 	var { email , password} = req.body 
 
