@@ -6,6 +6,7 @@ var path = require('path')
 var app = express() 
 
 const authRoutes = require('./Routes/auth')
+const dataRoutes = require('./Routes/data')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended : false }))
@@ -20,6 +21,7 @@ app.use((req , res , next) => {
 
 
 app.use('/auth' , authRoutes)
+app.use('/data' , dataRoutes)
 
 
 mongoose.connect('mongodb://localhost:9000/pwl' ,  {useUnifiedTopology : true , useNewUrlParser : true })
