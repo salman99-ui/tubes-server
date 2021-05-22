@@ -154,9 +154,38 @@ exports.googleLogin = (req , res , next) => {
 
 			let token = jwt.sign({id : User._id } , "130417" , { expiresIn : '24h'})
 
-			res.status(201).json({ message : "Register Success" , token : token })
+			res.status(200).json({ message : "Register Success" , token : token })
 
 
 
 		})
+}
+
+exports.checkEmail = (req , res , next) => {
+
+		const {email} = req.body
+
+		user.findOne({email : email}).then( User => {
+			if(!User){
+				res.status(401).json({
+					message : "Email Not Found"
+				})
+			}
+
+			res.status(200).json({
+				message : "Email Found"
+			})
+		})
+}
+
+exports.changePassword = (req , res , next) => {
+		const {email , password} = req.body 
+
+		bcrypt.hash(password , 10 ).then( hash => {
+			user.updateOne({email : email} , {password : hash})
+				.then( result => {
+					res.send(200).json({message : "Success"})
+				})	
+		})
+		
 }
